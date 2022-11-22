@@ -85,7 +85,7 @@
         selectMidiChannel = rpgen3.addSelect(html, {
             label: 'MIDI入力チャンネルを選択',
             save: true,
-            list: [1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 12, 13, 14, 15, 16].map(v => [`Ch.${v}`, v - 1])
+            list: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16].map(v => [`Ch.${v}`, v - 1])
         });
         $('<dd>').appendTo(html);
         rpgen3.addBtn(html, '出力テスト(C5)', async () => {
@@ -160,16 +160,22 @@
     const mergeChannels = (midiNoteArray, channel) => {
         const now = new Map;
         return midiNoteArray.map(midiNote => {
-            if (midiNote.channel === 0x9) return midiNote;
-            const lastMidiNote = now.get(midiNote.pitch);
-            if (lastMidiNote.start === midiNote.start) {
-                lastMidiNote.end = Math.max(lastMidiNote.end, midiNote.end);
-                return null;
-            } else if (lastMidiNote.end > midiNote.start) {
-                lastMidiNote.end = midiNote.start;
+            if (midiNote.channel === 0x9) {
+                return midiNote;
+            } else if (now.has(midiNote.pitch)) {
+                const lastMidiNote = now.get(midiNote.pitch);
+                if (lastMidiNote.start === midiNote.start) {
+                    lastMidiNote.end = Math.max(lastMidiNote.end, midiNote.end);
+                    return null;
+                } else if (lastMidiNote.end > midiNote.start) {
+                    lastMidiNote.end = midiNote.start;
+                }
+                now.set(midiNote.pitch, midiNote);
             }
-            lastMidiNote.channel = channel;
-            now.set(midiNote.pitch, midiNote);
-        }).filter(v => v);
+            return midiNote;
+        }).filter(v => v).map(v => {
+            v.channel = channel;
+            return v;
+        });
     };
 })();
