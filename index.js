@@ -69,7 +69,7 @@
         rpgen3.addBtn(html, 'MIDI入力デバイスに接続', async () => {
             try {
                 const midiOutputs = await rpgen4.midiScheduler.midiOutput.fetchMidiOutputs();
-                selectMidiOutput.update([...midiOutputs].map(v => [v.name, v]));
+                selectMidiOutput.update([...midiOutputs].map(([_, v]) => [v.name, v]));
                 viewStatus('接続成功');
             } catch (err) {
                 console.error(err);
@@ -78,6 +78,9 @@
         }).addClass('btn');
         const selectMidiOutput = rpgen3.addSelect(html, {
             label: 'MIDI入力デバイスを選択'
+        });
+        selectMidiOutput.elm.on('change', () => {
+            rpgen4.midiScheduler.midiOutput.midiOutput = selectMidiOutput();
         });
         selectMidiChannel = rpgen3.addSelect(html, {
             label: 'MIDI入力チャンネルを選択',
