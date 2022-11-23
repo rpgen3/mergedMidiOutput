@@ -8,11 +8,9 @@ export const midiScheduler = new class {
         this.isStopping = false;
         this.id = -1;
         this.startedTime = 0;
+        this.speedRate = 1;
         this.duration = 0;
         this.scheduledTime = 500;
-        this.shiftedLyricTime = 10;
-        this.speedRate = 1;
-        this.totalTime = 0;
     }
     load({tempos, midiNotes}) {
         const shiftedTempos = tempos.slice(1).concat(new UstTempoMessage({when: Infinity}));
@@ -26,7 +24,7 @@ export const midiScheduler = new class {
         for (const [i, {bpm}] of tempos.entries()) {
             const {when} = shiftedTempos[i];
             while(!this.midiNotes.done && this.midiNotes.head.when < when) {
-                this.midiNotes.head.when = toMilliSecond(bpm, this.midiNotes.head.when) + startMilliSecond;
+                this.midiNotes.head.when = (toMilliSecond(bpm, this.midiNotes.head.when) + startMilliSecond) / this.speedRate;
                 this.midiNotes.advance();
             }
             startMilliSecond += toMilliSecond(bpm, when);
