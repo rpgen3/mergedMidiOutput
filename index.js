@@ -177,7 +177,7 @@
                 return midiNote;
             }
         }).filter(v => v).map(v => {
-            if (midiNote.channel === dramChannel) {
+            if (v.channel !== dramChannel) {
                 v.channel = channel;
             }
             return v;
