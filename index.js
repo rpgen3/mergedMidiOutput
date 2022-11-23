@@ -157,10 +157,11 @@
             tempos: rpgen4.MidiTempoMessage.makeArray(g_midi)
         };
     };
+    const dramChannel = 0x9;
     const mergeChannels = (midiNoteArray, channel) => {
         const now = new Map;
         return midiNoteArray.map(midiNote => {
-            if (midiNote.channel === 0x9) {
+            if (midiNote.channel === dramChannel) {
                 return midiNote;
             } else if (now.has(midiNote.pitch)) {
                 const lastMidiNote = now.get(midiNote.pitch);
@@ -171,10 +172,14 @@
                     lastMidiNote.end = midiNote.start;
                 }
                 now.set(midiNote.pitch, midiNote);
+                return midiNote;
+            } else {
+                return midiNote;
             }
-            return midiNote;
         }).filter(v => v).map(v => {
-            v.channel = channel;
+            if (midiNote.channel === dramChannel) {
+                v.channel = channel;
+            }
             return v;
         });
     };
