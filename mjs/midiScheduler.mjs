@@ -44,7 +44,7 @@ export const midiScheduler = new class {
         const when = this.totalTime + this.scheduledTime;
         while (!this.midiNotes.done && this.midiNotes.head.when < when) {
             const data = this.midiNotes.head;
-            const timestamp = data.when + this.startedTime;
+            const timestamp = (data.when + this.startedTime + this.totalTime) / this.speedRate;
             this.midiOutput.noteOn({data, timestamp});
             this.midiNotes.advance();
         }
