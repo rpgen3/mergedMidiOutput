@@ -131,7 +131,7 @@
         const inputSpeedRate = rpgen3.addSelect(html, {
             label: '演奏速度',
             save: true,
-            list: [0.25, 0.5, 1, 2, 4].map(v => [`x${v}`, v - 1]),
+            list: [0.25, 0.5, 1, 2, 4].map(v => [`x${v}`, v]),
             value: 'x1'
         });
         inputSpeedRate.elm.on('change', () => {
