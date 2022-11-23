@@ -92,14 +92,19 @@
         });
         $('<dd>').appendTo(html);
         rpgen3.addBtn(html, '出力テスト(C5)', async () => {
-            const channel = selectMidiChannel();
-            rpgen4.midiScheduler.midiOutput.noteOn({
-                data: {channel, pitch: 0x48, velocity: 100}
-            });
-            rpgen4.midiScheduler.midiOutput.noteOn({
-                data: {channel, pitch: 0x48, velocity: 0},
-                timestamp: performance.now() + 500
-            });
+            try {
+                const channel = selectMidiChannel();
+                rpgen4.midiScheduler.midiOutput.noteOn({
+                    data: {channel, pitch: 0x48, velocity: 100}
+                });
+                rpgen4.midiScheduler.midiOutput.noteOn({
+                    data: {channel, pitch: 0x48, velocity: 0},
+                    timestamp: performance.now() + 500
+                });
+            } catch (err) {
+                console.error(err);
+                alert(err);
+            }
         }).addClass('btn');
     }
     let g_midi = null;
