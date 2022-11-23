@@ -91,7 +91,7 @@
             ]
         });
         $('<dd>').appendTo(html);
-        rpgen3.addBtn(html, '出力テスト(C5)', async () => {
+        rpgen3.addBtn(html, '出力テスト(C5)', () => {
             try {
                 const channel = selectMidiChannel();
                 rpgen4.midiScheduler.midiOutput.noteOn({
