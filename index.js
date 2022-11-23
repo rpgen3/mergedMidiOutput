@@ -83,9 +83,12 @@
             rpgen4.midiScheduler.midiOutput.midiOutput = selectMidiOutput();
         });
         selectMidiChannel = rpgen3.addSelect(html, {
-            label: 'MIDI入力チャンネルを選択',
+            label: 'MIDIを出力するチャンネルを選択',
             save: true,
-            list: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16].map(v => [`Ch.${v}`, v - 1])
+            list: [
+                ['全てのチャンネル', null],
+                ...[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16].map(v => [`Ch.${v}`, v - 1])
+            ]
         });
         $('<dd>').appendTo(html);
         rpgen3.addBtn(html, '出力テスト(C5)', async () => {
@@ -112,7 +115,7 @@
         });
     }
     {
-        const {html} = addHideArea('tuning MIDI');
+        const {html} = addHideArea('settings');
         const inputScheduledTime = rpgen3.addSelect(html, {
             label: 'スケジューリング[ミリ秒]',
             save: true,
@@ -124,6 +127,15 @@
         });
         inputScheduledTime.elm.on('change', () => {
             rpgen4.midiScheduler.scheduledTime = inputScheduledTime();
+        }).trigger('change');
+        const inputSpeedRate = rpgen3.addSelect(html, {
+            label: '演奏速度',
+            save: true,
+            list: [0.25, 0.5, 1, 2, 4].map(v => [`x${v}`, v - 1]),
+            value: 'x1'
+        });
+        inputSpeedRate.elm.on('change', () => {
+            rpgen4.midiScheduler.speedRate = inputSpeedRate();
         }).trigger('change');
     }
     {
@@ -159,6 +171,9 @@
     };
     const dramChannel = 0x9;
     const mergeChannels = (midiNoteArray, channel) => {
+        if (channel === null) {
+            return midiNoteArray;
+        }
         const now = new Map;
         return midiNoteArray.map(midiNote => {
             if (midiNote.channel === dramChannel) {
