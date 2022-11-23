@@ -11,6 +11,8 @@ export const midiScheduler = new class {
         this.duration = 0;
         this.scheduledTime = 500;
         this.shiftedLyricTime = 10;
+        this.speedRate = 1;
+        this.totalTime = 0;
     }
     load({tempos, midiNotes}) {
         const shiftedTempos = tempos.slice(1).concat(new UstTempoMessage({when: Infinity}));
@@ -38,7 +40,8 @@ export const midiScheduler = new class {
     }
     #update() {
         const now = performance.now();
-        const when = now - this.startedTime + this.scheduledTime;
+        this.totalTime += this.speedRate * (now - this.startedTime - this.totalTime);
+        const when = this.totalTime + this.scheduledTime;
         while (!this.midiNotes.done && this.midiNotes.head.when < when) {
             const data = this.midiNotes.head;
             const timestamp = data.when + this.startedTime;
