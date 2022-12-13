@@ -57,7 +57,7 @@ export const midiScheduler = new class {
         this.isStopping = true;
         clearInterval(this.id);
         return new Promise(resolve => {
-            const id = setInterval(() => this.midiOutput.allSoundOff());
+            const id = setInterval(() => this.midiOutput.allChannels.allNotesOff());
             setTimeout(() => {
                 clearInterval(id);
                 this.isStopping = false;
