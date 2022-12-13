@@ -165,6 +165,11 @@
             await rpgen4.midiScheduler.play();
             scheduledToEnd(new Date(Date.now() + rpgen4.midiScheduler.scheduledTime + rpgen4.midiScheduler.duration).toTimeString());
         }).addClass('btn');
+        $('<dd>').appendTo(html);
+        rpgen3.addBtn(html, '音色の初期化', async () => {
+            rpgen4.midiScheduler.midiOutput.allChannels.resetAllControllers();
+            scheduledToEnd('音色を初期化した');
+        }).addClass('btn');
     }
     const makeMessageArrays = () => {
         const midiNoteArray = rpgen4.MidiNote.makeArray(g_midi);
