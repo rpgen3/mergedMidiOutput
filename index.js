@@ -14,7 +14,7 @@
           main = $('<main>').appendTo(html),
           foot = $('<footer>').appendTo(html);
     $('<h1>').appendTo(head).text('MIDI出力');
-    $('<h2>').appendTo(head).text('MIDI入力デバイスにMIDIファイルを出力する');
+    $('<h2>').appendTo(head).text('MIDI出力デバイスにMIDIファイルを出力する');
     const rpgen3 = await importAll([
         'input',
         'css',
@@ -66,7 +66,7 @@
             label: '状態：',
             value: '未接続'
         });
-        rpgen3.addBtn(html, 'MIDI入力デバイスに接続', async () => {
+        rpgen3.addBtn(html, 'MIDI出力デバイスに接続', async () => {
             try {
                 const midiOutputs = await rpgen4.midiScheduler.midiOutput.fetchMidiOutputs();
                 selectMidiOutput.update([...midiOutputs].map(([_, v]) => [v.name, v]));
@@ -77,7 +77,7 @@
             }
         }).addClass('btn');
         const selectMidiOutput = rpgen3.addSelect(html, {
-            label: 'MIDI入力デバイスを選択'
+            label: 'MIDI出力デバイスを選択'
         });
         selectMidiOutput.elm.on('change', () => {
             rpgen4.midiScheduler.midiOutput.midiOutput = selectMidiOutput();
