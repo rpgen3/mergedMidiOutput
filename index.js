@@ -83,7 +83,7 @@
             rpgen4.midiScheduler.midiOutput.midiOutput = selectMidiOutput();
         });
         selectMidiChannel = rpgen3.addSelect(html, {
-            label: 'MIDIを出力するチャンネルを選択',
+            label: '出力先のチャンネルを選択',
             save: true,
             list: [
                 ['全てのチャンネル', null],
