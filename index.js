@@ -172,7 +172,7 @@
             scheduledToEnd(new Date(Date.now() + rpgen4.midiScheduler.scheduledTime + rpgen4.midiScheduler.duration).toTimeString());
         }).addClass('btn');
         rpgen3.addBtn(html, '音色の初期化', async () => {
-            rpgen4.midiScheduler.midiOutput.allChannels.programChange({data: {programChange: 0x00}});
+            rpgen4.midiScheduler.midiOutput.allChannels.programChange({data: {program: 0x00}});
             scheduledToEnd('音色を初期化した');
         }).addClass('btn');
         $('<dd>').appendTo(html);
