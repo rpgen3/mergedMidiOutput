@@ -110,10 +110,16 @@
     let g_midi = null;
     {
         const {html} = addHideArea('input MIDI file');
-        $('<dt>').appendTo(html).text('MIDIファイル');
+        const viewStatus = addLabeledText(html, {
+            label: 'MIDIファイル：',
+            value: '入力したファイル名'
+        });
         const inputFile = $('<input>').appendTo($('<dd>').appendTo(html)).prop({
             type: 'file',
             accept: '.mid'
+        }).on('change', async ({target}) => {
+            const file = target.files.item(0);
+            viewStatus(file?.name);
         });
         MidiParser.parse(inputFile.get(0), v => {
             g_midi = v;
