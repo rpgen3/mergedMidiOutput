@@ -23,6 +23,7 @@
     const rpgen4 = await importAll([
         'https://rpgen3.github.io/maze/mjs/heap/Heap.mjs',
         [
+            'midiOutput/MidiOutput',
             'MidiNote',
             'MidiNoteMessage',
             'MidiTempoMessage'
@@ -68,7 +69,7 @@
         });
         rpgen3.addBtn(html, 'MIDI出力デバイスに接続', async () => {
             try {
-                const midiOutputs = await rpgen4.midiScheduler.midiOutput.fetchMidiOutputs();
+                const midiOutputs = await rpgen4.MidiOutput.fetchMidiOutputs();
                 selectMidiOutput.update([...midiOutputs].map(([_, v]) => [v.name, v]));
                 viewStatus('接続成功');
             } catch (err) {
