@@ -1,10 +1,9 @@
 import {delta2sec} from 'https://rpgen3.github.io/piano/mjs/midi/sec2delta.mjs';
 import {ArrayAdvancer} from 'https://rpgen3.github.io/nsx39/mjs/ArrayAdvancer.mjs';
 import {UstTempoMessage} from 'https://rpgen3.github.io/nsx39/mjs/UstTempoMessage.mjs';
-import {MidiOutput} from 'https://rpgen3.github.io/nsx39/mjs/midiOutput/MidiOutput.mjs';
 export const midiScheduler = new class {
     constructor() {
-        this.midiOutput = new MidiOutput;
+        this.midiOutput = null;
         this.isStopping = false;
         this.id = -1;
         this.startedTime = 0;
