@@ -21,6 +21,7 @@
         'util'
     ].map(v => `https://rpgen3.github.io/mylib/export/${v}.mjs`));
     const rpgen4 = await importAll([
+        'https://rpgen3.github.io/maze/mjs/heap/Heap.mjs',
         'https://rpgen3.github.io/nsx39/mjs/midiOutput/MidiOutput.mjs',
         [
             'MidiNote',
@@ -80,7 +81,7 @@
             label: 'MIDI出力デバイスを選択'
         });
         selectMidiOutput.elm.on('change', () => {
-            rpgen4.midiScheduler.midiOutput.midiOutput = selectMidiOutput();
+            rpgen4.midiScheduler.midiOutput = new rpgen4.MidiOutput(selectMidiOutput());
         });
         selectMidiChannel = rpgen3.addSelect(html, {
             label: '出力先のチャンネルを選択',
