@@ -149,11 +149,6 @@
         inputSpeedRate.elm.on('change', () => {
             rpgen4.midiScheduler.speedRate = inputSpeedRate();
         }).trigger('change');
-        rpgen3.addBtn(html, '音色の初期化', async () => {
-            rpgen4.midiScheduler.midiOutput.allChannels.programChange({data: {program: 0x00}});
-            scheduledToEnd('音色を初期化した');
-        }).addClass('btn');
-        $('<dd>').appendTo(html);
     }
     {
         const {html} = addHideArea('playing');
