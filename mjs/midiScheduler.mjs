@@ -23,7 +23,7 @@ export const midiScheduler = new class {
         for (const [i, {bpm}] of tempos.entries()) {
             const {when} = shiftedTempos[i];
             while(!this.midiNotes.done && this.midiNotes.head.when < when) {
-                this.midiNotes.head.when = (toMilliSecond(bpm, this.midiNotes.head.when) + startMilliSecond) / this.speedRate;
+                this.midiNotes.head.when = (toMilliSecond(bpm, this.midiNotes.head.when) + startMilliSecond) / this.speedRate + this.scheduledTime;
                 this.midiNotes.advance();
             }
             startMilliSecond += toMilliSecond(bpm, when);
