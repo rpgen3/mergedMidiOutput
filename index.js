@@ -128,6 +128,15 @@
     }
     {
         const {html} = addHideArea('settings');
+        const inputSpeedRate = rpgen3.addSelect(html, {
+            label: '演奏速度',
+            save: true,
+            list: [0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2].map(v => [`x${v}`, v]),
+            value: 'x1'
+        });
+        inputSpeedRate.elm.on('change', () => {
+            rpgen4.midiScheduler.speedRate = inputSpeedRate();
+        }).trigger('change');
         const inputScheduledTime = rpgen3.addSelect(html, {
             label: 'スケジューリング[ミリ秒]',
             save: true,
@@ -140,14 +149,14 @@
         inputScheduledTime.elm.on('change', () => {
             rpgen4.midiScheduler.scheduledTime = inputScheduledTime();
         }).trigger('change');
-        const inputSpeedRate = rpgen3.addSelect(html, {
-            label: '演奏速度',
+        const inputShiftedNoteOffTime = rpgen3.addSelect(html, {
+            label: 'ノートオフを先行させる[デルタ時間]',
             save: true,
-            list: [0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2].map(v => [`x${v}`, v]),
-            value: 'x1'
+            list: [...Array(10).keys()],
+            value: 1
         });
-        inputSpeedRate.elm.on('change', () => {
-            rpgen4.midiScheduler.speedRate = inputSpeedRate();
+        inputShiftedNoteOffTime.elm.on('change', () => {
+            rpgen4.midiScheduler.shiftedNoteOffTime = inputShiftedNoteOffTime();
         }).trigger('change');
     }
     {
