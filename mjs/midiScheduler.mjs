@@ -10,8 +10,14 @@ export const midiScheduler = new class {
         this.speedRate = 1;
         this.duration = 0;
         this.scheduledTime = 500;
+        this.shiftedNoteOffTime = 1;
     }
     load({tempos, midiNotes}) {
+        for (const v of midiNotes) {
+            if (v.velocity === 0) {
+                v.when -= this.shiftedNoteOffTime;
+            }
+        }
         const shiftedTempos = tempos.slice(1).concat(new UstTempoMessage({when: Infinity}));
         this.midiNotes = new ArrayAdvancer(midiNotes || []);
         let startDeltaTime = 0;
