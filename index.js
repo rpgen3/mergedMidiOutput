@@ -71,6 +71,7 @@
             try {
                 const midiOutputs = await rpgen4.MidiOutput.fetchMidiOutputs();
                 selectMidiOutput.update([...midiOutputs].map(([_, v]) => [v.name, v]));
+                selectMidiOutput.elm.trigger('change');
                 viewStatus('接続成功');
             } catch (err) {
                 console.error(err);
