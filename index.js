@@ -13,8 +13,8 @@
     const head = $('<header>').appendTo(html),
           main = $('<main>').appendTo(html),
           foot = $('<footer>').appendTo(html);
-    $('<h1>').appendTo(head).text('MIDI出力');
-    $('<h2>').appendTo(head).text('MIDI出力デバイスにMIDIファイルを出力する');
+    $('<h1>').appendTo(head).text('マージされたMIDI出力');
+    $('<h2>').appendTo(head).text('MIDI出力デバイスに1つのトラックにマージされたMIDIファイルを出力する');
     const rpgen3 = await importAll([
         'input',
         'css',
