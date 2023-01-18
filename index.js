@@ -30,7 +30,7 @@
         ].map(v => `https://rpgen3.github.io/piano/mjs/midi/${v}.mjs`),
         [
             'midiScheduler'
-        ].map(v => `https://rpgen3.github.io/midiOutput/mjs/${v}.mjs`)
+        ].map(v => `https://rpgen3.github.io/mergedMidiOutput/mjs/${v}.mjs`)
     ].flat());
     Promise.all([
         'container',
